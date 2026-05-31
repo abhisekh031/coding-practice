@@ -53,15 +53,15 @@ from
 posts 
 )
 , test1 as (
-select creator_id ,sum(impressions) as total
+select creator_id ,sum(impressions) as total,count(post_id) as no_of_posts 
 from test 
 where flag=1
 group by creator_id 
 having sum(impressions)>100000 and count(post_id)>=3
 )
-select a.*
+select a.creator_name,b.no_of_posts,b.total as total_impressions
 from creators a 
  join test1 b 
 on a.creator_id=b.creator_id
 where a.followers>50000
-
+ORDER BY total DESC;
